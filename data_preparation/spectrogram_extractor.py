@@ -14,7 +14,7 @@ def read_h5_file(file_path):
         
         # calculate_spectrogram
         sample_rate = 44100
-        save_spectrograms_to_pdf(example_data, sample_rate, "spectrogram.pdf")
+        #save_spectrograms_to_pdf(example_data, sample_rate, "spectrogram.pdf")
 
 
 def save_spectrograms_to_pdf(audio_data, sample_rate, filename="spectrograms.pdf"):
@@ -40,5 +40,5 @@ def save_spectrograms_to_pdf(audio_data, sample_rate, filename="spectrograms.pdf
 
 
 # 调用读取函数并输出 shape
-read_h5_file('/cae-microphone-array-containerized/src/Extractor_V2/processor/processor/audio_data.h5')
+read_h5_file('/cae-microphone-array-containerized/src/Sound_Localization_with_Microphone_Array/data_preparation/audio_data.h5')
 
