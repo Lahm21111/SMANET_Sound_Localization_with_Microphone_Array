@@ -24,7 +24,7 @@ def process_audio(audio):
     # set the parameter for stft processing 
     sr =  24000
     num_mics = 4  # Four microphones
-    num_segments = 100
+    num_segments = len(audio)
     frame_size = 512  # time window
     hop_size = frame_size // 2  # 50% overlap
 
@@ -37,7 +37,8 @@ def process_audio(audio):
     output_data = np.zeros((num_segments, num_mics * 2, 168, 7), dtype=np.float32)
 
     # Process each segment separately
-    for i in range(100):
+    for i in range(len(audio)):
+        print(i)
         segment = audio[i,:].T
         print(segment.shape,frame_size,hop_size)
 
@@ -69,7 +70,7 @@ stft_h5 = r"C:\Users\grizi\Desktop\TUD\year2\thesis\neural_network\DoA_Net\data\
 
 with h5py.File(stft_h5, 'w') as h5file1:
     h5file1.create_dataset('stft', data=stfts)
-    h5file1.create_dataset('audio', data=audio_data[:100,:,:])
-    h5file1.create_dataset('label', data=label_data[:100,:])
+    h5file1.create_dataset('audio', data=audio_data)
+    h5file1.create_dataset('label', data=label_data)
 
 print("Processing complete. Data shape:", stfts.shape)
