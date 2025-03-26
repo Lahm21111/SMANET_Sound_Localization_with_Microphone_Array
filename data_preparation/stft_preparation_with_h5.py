@@ -3,7 +3,7 @@ import numpy as np
 import librosa
 
 # Path to the H5 file
-h5_file_path = r"C:\Users\grizi\Desktop\TUD\year2\thesis\neural_network\dataset_tools\car_test_dataset.h5"
+h5_file_path = r"C:\Users\grizi\Desktop\TUD\year2\thesis\neural_network\dataset_tools\car_test_dataset_2.h5"
 
 # Open the H5 file
 with h5py.File(h5_file_path, 'r') as h5file:
@@ -61,14 +61,21 @@ def process_audio(audio):
 
     return output_data
 
-audio_data = audio_data.reshape((1,audio_data.shape[0],audio_data.shape[1]))
-print("the shape of the audio_data is ", audio_data.shape)
-stfts = process_audio(audio_data)
+print(audio_data.shape)
+stfts = []
+for i in range(len(audio_data)):
+    audio_split = audio_data[i].reshape((1,audio_data.shape[1],audio_data.shape[2]))
+    print("the shape of the audio_data is ", audio_split.shape)
+    stft = process_audio(audio_split)
+    stfts.append(stft)
+
+stfts = np.array(stfts)
+stfts = np.squeeze(stfts,axis = 1)
 print(stfts.shape)
 
 # save the stft data to h5 file 
-# with h5py.File(h5_file_path, 'a') as h5file:
-#     h5file.create_dataset('stft', data=stfts)
+with h5py.File(h5_file_path, 'a') as h5file:
+    h5file.create_dataset('stft', data=stfts)
 
 # stft_h5 = r"C:\Users\grizi\Desktop\TUD\year2\thesis\neural_network\DoA_Net\data\stft.h5"
 
